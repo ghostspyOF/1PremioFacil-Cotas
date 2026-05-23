@@ -1011,8 +1011,8 @@ onmouseup="this.style.transform='scale(1.05)'">
 //Na planilha colocar o ID na linha correspondete, por exemplo: linha2, coluna A vai o ID, na coluna B vai o; Link/URL/texto/Numero...       
 // ==========================================
 // Criamos a variável onde o número do sorteio vai ficar guardado
-window.quantidadeNumerosSorteio = 1000; // Valor padrão de segurança
-window.chavePixPlanilha = "ErroAoCopiar"; // Chave PIX padrão de segurança caso a planilha falhe
+window.quantidadeNumerosSorteio = 100; // Valor padrão de segurança
+window.chavePixPlanilha = "0000000000"; // Chave PIX padrão de segurança caso a planilha falhe
 
 (function() {
     const CONFIG_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBdaYxM5mhbbejiQkscqj46buinbkbLLwDXEqJn7mBc1D1kLD-5dST5Xvb9w4cTmuGE0t03fTzkFfe/pub?output=csv";
@@ -1035,7 +1035,7 @@ window.chavePixPlanilha = "ErroAoCopiar"; // Chave PIX padrão de segurança cas
                     let conteudo = dadosColunas[1].replace(/['"]/g, '').trim();
 
                     // --- CONFIGURAÇÃO: QUANTIDADE DE NÚMEROS ---
-                    if (idElemento === "21") {
+                    if (idElemento === "CONFIG_QUANTIDADE_NUMEROS") {
                         window.quantidadeNumerosSorteio = parseInt(conteudo, 10) || 1000;
                         console.log(`Sucesso: Quantidade de números definida para: ${window.quantidadeNumerosSorteio}`);
                         
@@ -1045,7 +1045,7 @@ window.chavePixPlanilha = "ErroAoCopiar"; // Chave PIX padrão de segurança cas
                         return; 
                     }
 
-                    // --- CONFIGURAÇÃO: VALOR POR NÚMERO (TEM QUE SER assim n PLnilha: CONFIG_VALOR_NUMERO) ---
+                    // --- CONFIGURAÇÃO: VALOR POR NÚMERO (NOVO ID) ---
                     if (idElemento === "CONFIG_VALOR_NUMERO") {
                         const valorLimpo = conteudo.replace(',', '.');
                         // Atualiza diretamente a variável usada nas suas contas matemágicas
@@ -1054,7 +1054,7 @@ window.chavePixPlanilha = "ErroAoCopiar"; // Chave PIX padrão de segurança cas
                         return;
                     }
 
-                    // --- CONFIGURAÇÃO: CHAVE PIX (TEM QUE SER assim n PLnilha: CONFIG_CHAVE_PIX) ---
+                    // --- CONFIGURAÇÃO: CHAVE PIX (NOVO ID) ---
                     if (idElemento === "CONFIG_CHAVE_PIX") {
                         window.chavePixPlanilha = conteudo;
                         console.log(`Sucesso: Chave PIX definida para: ${window.chavePixPlanilha}`);
@@ -1088,7 +1088,6 @@ window.chavePixPlanilha = "ErroAoCopiar"; // Chave PIX padrão de segurança cas
         atualizarSite();
     }
 })();
-
 
 
 
