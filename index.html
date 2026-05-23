@@ -1014,9 +1014,9 @@ onmouseup="this.style.transform='scale(1.05)'">
     </div>
 
     <script>
-       // Criamos a variável onde o número do sorteio vai ficar guardado
-window.quantidadeNumerosSorteio = 100; // Valor padrão de segurança
-window.chavePixPlanilha = "000000000"; // Chave PIX padrão de segurança caso a planilha falhe
+        // Criamos a variável onde o número do sorteio vai ficar guardado
+window.quantidadeNumerosSorteio = 1000; // Valor padrão de segurança
+window.chavePixPlanilha = "32865511120"; // Chave PIX padrão de segurança caso a planilha falhe
 
 (function() {
     const CONFIG_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBdaYxM5mhbbejiQkscqj46buinbkbLLwDXEqJn7mBc1D1kLD-5dST5Xvb9w4cTmuGE0t03fTzkFfe/pub?output=csv";
@@ -1086,15 +1086,47 @@ window.chavePixPlanilha = "000000000"; // Chave PIX padrão de segurança caso a
         }
     }
 
+    // --- NOVA FUNÇÃO PARA FORÇAR A CÓPIA CORRETA SEM MEXER NO RESTO DO SITE ---
+    function aplicarIntercetadorPix() {
+        const botaoPagar = document.getElementById('btnPagar');
+        if (botaoPagar) {
+            // Usamos 'capture: true' para rodar ANTES do seu outro script antigo
+            botaoPagar.addEventListener('click', function(evento) {
+                // Para a ação do outro script antigo para não dar dois alertas na tela
+                evento.stopImmediatePropagation();
+                
+                const chaveParaCopiar = window.chavePixPlanilha;
+
+                navigator.clipboard.writeText(chaveParaCopiar).then(() => {
+                    alert("Chave PIX copiada com sucesso!");
+                }).catch(err => {
+                    console.error("Erro ao copiar: ", err);
+                    const inputProvisorio = document.createElement("input");
+                    inputProvisorio.value = chaveParaCopiar;
+                    document.body.appendChild(inputProvisorio);
+                    inputProvisorio.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(inputProvisorio);
+                    alert("Chave PIX copiada!");
+                });
+            }, { capture: true });
+        }
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', atualizarSite);
+        document.addEventListener('DOMContentLoaded', () => {
+            atualizarSite();
+            aplicarIntercetadorPix();
+        });
     } else {
         atualizarSite();
+        aplicarIntercetadorPix();
     }
 })();
- 
 
+       
 
+//🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺🔺
         
         //Função do top
                 function toggleMenu() {
