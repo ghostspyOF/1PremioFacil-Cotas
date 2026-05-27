@@ -18,6 +18,75 @@
             justify-content: flex-start !important;
             padding: 0 !important;
         }
+    
+        /* ==========================================
+   CÓDIGO NOVO CORRIGIDO E RESPONSIVO
+   ========================================== */
+
+/* Como vai se comportar no CELULAR (Padrão) */
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 95%;
+    max-width: 450px; 
+    margin: 30px auto;
+}
+.fast-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* 📱 MUDANÇA PARA TABLET (Telas médias) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 700px; /* O site fica mais largo no tablet */
+    }
+    .fast-buttons {
+        grid-template-columns: repeat(4, 1fr); /* Os botões ficam em 4 colunas em vez de duas */
+    }
+    .fast-buttons button[style*="grid-column: span 2;"] {
+        grid-column: span 4 !important; /* Ajusta os botões grandes */
+    }
+}
+
+/* 💻 MUDANÇA PARA COMPUTADOR (Telas grandes) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 950px; /* O site se espalha bem na tela do PC */
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Divide o site em duas colunas LADO A LADO */
+        gap: 30px;
+        align-items: start;
+    }
+
+    /* O Bilhete Azul vai ficar fixo na coluna da Esquerda */
+    .container > div:first-child {
+        grid-column: 1;
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    /* A linha divisória com bolinhas some no PC (não precisa dela lado a lado) */
+    .container > div:nth-child(2) {
+        display: none; 
+    }
+
+    /* Tudo o que é formulário e botões vai para a coluna da Direita */
+    #loading, .fast-buttons, .form-group, .btn-generate, .results {
+        grid-column: 2;
+    }
+    .fast-buttons {
+        grid-template-columns: repeat(3, 1fr); /* Botões organizados em 3 colunas no PC */
+    }
+    .fast-buttons button[style*="grid-column: span 2;"] {
+        grid-column: span 3 !important;
+    }
+}
+
 
         /* Topo Azul do Prêmio Fácil */
         .header-top {
@@ -158,15 +227,7 @@
         .container {
             margin: 30px auto;
         }
-
-        .container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 450px;
-            width: 100%;
-        }
+       
         h2 {
             text-align: center;
             color: #333;
@@ -237,12 +298,7 @@
             font-style: italic;
             margin-bottom: 10px;
         }
-            .fast-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+         
         .btn-fast {
             background-color: #f8f9fa;
             border: 2px solid #dee2e6;
@@ -813,7 +869,7 @@
     
     function iniciarCronometro() {
         const duracaoTotal = 4 * 60 * 60 * 1000; // <--- ALTERADO PARA 7 HORAS
-        let horarioFinal = localStorage.getItem('cronometro_oferta_4h'); // <--- Nome atualizado
+        let horarioFinal = parseInt(localStorage.getItem('cronometro_oferta_4h'));
 
         if (!horarioFinal) {
             horarioFinal = Date.now() + duracaoTotal;
