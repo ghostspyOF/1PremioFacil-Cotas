@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -265,17 +266,30 @@
             color: #28a745;
             font-weight: bold;
         }
+    
+    .alerta-pequeno {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 6px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    display: none; /* Começa escondido */
+}
+
 
     </style>
 </head>
 <body>
 
 <div class="header-top">
-    <div class="header-left">
-            <div class="header-left">
-        <img src="logo.jpg" alt="Prêmio Fácil" style="height: 40px; width: auto; border-radius: 0 15px 15px 15px; display: block;">
+    
+     <div class="header-left">
+        <img src="logo.png" alt="Prêmio Fácil" style="height: 40px; width: auto; border-radius: 0 17px 0 17px; display: block;">
     </div>
-    </div>
+    
     <div class="header-center">
         <svg viewBox="0 0 512 512"><path d="M256 0a256 256 0 1 0 0 512 256 256 0 1 0 0-512zm0 64c17.6 0 34.3 3.5 49.6 9.8L281 123.4c-7.3-3.1-15.1-4.7-23-4.7s-15.7 1.6-23 4.7l-24.6-49.6C221.7 67.5 238.4 64 256 64zm-81.5 21.1l21.1 42.5c-20.7 11.2-35.4 31.4-38.9 55.1l-47.1 5.2c-2-19.1 2.3-38.4 12.1-55.1s24.7-29.8 42.8-37.7zm163 0c18.1 7.9 33 21 42.8 37.7s14.1 36 12.1 55.1l-47.1-5.2c-3.5-23.7-18.2-43.9-38.9-55.1l21.1-42.5zM96.4 198.8l45.4-5c5.7 34.7 30 63.3 63.3 75.3l-14.7 44.7c-31.5-12.7-56.7-36.4-71-66.5s-18.2-64.6-23-48.5zm319.2 0c-4.8-16.1-8.7-18.4-23-48.5s-39.5-53.8-71-66.5l-14.7 44.7c33.3 12 57.6 40.6 63.3 75.3l45.4 5zm-225.8 90c-15.8-5.7-28.7-17.2-35.9-32.1l43.2-25c3.3 6.9 9.3 12.2 16.6 14.8s15.3 1.9 22.2-.4l14.7 44.7c-14.8 4.9-31 4-44.8-1l14-41c.1 0 .2 0 0 0zm132.4 0c-13.8 5-30 5.9-44.8 1l14-41c3.5 1.2 7.3 1.5 11 1c3.7-.5 7.2-1.9 10.1-4.1l26 35.3c-4.3 3.6-9.8 6.3-15.6 7.6l-.7 .2zm-12.4-74.9l-26-35.3c8.9-6.5 20-9.4 30.9-8.2s20.6 7.2 27.1 16.1l-38.3 27.8c-2.3-3.1-5.7-5.2-9.6-5.7s-7.8 .4-11 2.3l11-3c2.4-.6 4.8-.8 7.2-.6c3.2 .3 6.3 1.4 9 3.2zm-97.6-20c6.5-8.9 16.2-14.9 27.1-16.1s22 1.7 30.9 8.2l-26 35.3c-3.2-1.9-7.1-2.8-11-2.3s-7.3 1.9-9.6 5.7l-38.3-27.8c4.2-5.6 9.4-10.4 15.3-13.9l11.6 11zM161.4 339l14.7-44.7c33.3-12 57.6-40.6 63.3-75.3l45.4 5c-5.7 34.7-30 63.3-63.3 75.3l-14.7 44.7c-14.8 4.9-31 4-44.8-1l-.6-.3z"/></svg>
         PRÊMIO FÁCIL
@@ -294,31 +308,329 @@
 <div id="menuModal" class="menu-modal">
     <div class="menu-modal-header">
         <div style="display: flex; align-items: center; gap: 8px;">
-            <svg viewBox="0 0 576 512" style="width: 20px; fill: red;"><path d="M400 96h16v138c0 55.6-38.7 103.5-91.6 116.3 15.2 25.1 41.2 42.6 71.6 47.1V448h48c17.7 0 32 14.3 32 32s-14.3 32-32 32H136c-17.7 0-32-14.3-32-32s14.3-32 32-32h48V397.4c30.4-4.5 56.4-22 71.6-47.1C210.7 337.5 172 289.6 172 224V96h16c17.7 0 32-14.3 32-32V32C220 14.3 205.7 0 188 0H112C50.1 0 0 50.1 0 112v32c0 47.1 29 87.5 70.1 103.5C88.4 316.4 153.2 368 232 379.7V448H192c-13.3 0-24 10.7-24 24s10.7 24 24 24h192c13.3 0 24-10.7 24-24s-10.7-24-24-24H344V379.7c78.8-11.7 143.6-63.3 161.9-132.2 41.1-16 70.1-56.4 70.1-103.5V112c0-61.9-50.1-112-112-112H388c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32zM76.1 144v-32c0-26.5 21.5-48 48-48h11.9v128h-11.9c-26.5 0-48-21.5-48-48zm423.8 0c0 26.5-21.5 48-48 48h-11.9V64h11.9c26.5 0 48 21.5 48 48v32z"/></svg>
-            
-            <p style="font-size: 15px; color: red; margin: 0; font-weight: bold;">
-                PRÊMIO FÁCIL
-            </p>
-        </div>        
-        <span class="close-menu" onclick="toggleMenu(false)">&times;</span>
- </div> 
-    <a href="SORTEAR-COTA.html">Admin</a>
-    <a href="Sobre.html">Sobre</a>
-    <a href="Ajuda.html">Suporte</a>
+    <svg viewBox="0 0 576 512" style="width: 20px; height: auto;">
+        <defs>
+            <linearGradient id="trofeuDuasCores" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="50%" stop-color="#ff8c00" /> <stop offset="50%" stop-color="#0056b3" /> </linearGradient>
+        </defs>
+        <path fill="url(#trofeuDuasCores)" d="M400 96h16v138c0 55.6-38.7 103.5-91.6 116.3 15.2 25.1 41.2 42.6 71.6 47.1V448h48c17.7 0 32 14.3 32 32s-14.3 32-32 32H136c-17.7 0-32-14.3-32-32s14.3-32 32-32h48V397.4c30.4-4.5 56.4-22 71.6-47.1C210.7 337.5 172 289.6 172 224V96h16c17.7 0 32-14.3 32-32V32C220 14.3 205.7 0 188 0H112C50.1 0 0 50.1 0 112v32c0 47.1 29 87.5 70.1 103.5C88.4 316.4 153.2 368 232 379.7V448H192c-13.3 0-24 10.7-24 24s10.7 24 24 24h192c13.3 0 24-10.7 24-24s-10.7-24-24-24H344V379.7c78.8-11.7 143.6-63.3 161.9-132.2 41.1-16 70.1-56.4 70.1-103.5V112c0-61.9-50.1-112-112-112H388c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32zM76.1 144v-32c0-26.5 21.5-48 48-48h11.9v128h-11.9c-26.5 0-48-21.5-48-48zm423.8 0c0 26.5-21.5 48-48 48h-11.9V64h11.9c26.5 0 48 21.5 48 48v32z"/>
+    </svg>           
+    
+    <p style="font-size: 15px; margin: 0; font-weight: bold; 
+              background: linear-gradient(to right, #009c3b, #ffdf00); 
+              -webkit-background-clip: text; 
+              -webkit-text-fill-color: transparent; 
+              display: inline-block;">
+        PRÊMIO FÁCIL
+    </p>
+</div>
+
+        
+    <span class="close-menu" onclick="toggleMenu(false)">&times;
+    </span>
+    </div> <a href="admin.html">Admin</a>
+    <a href="configuracao.html">Configuração</a>
+    <a href="suporte.html">Suporte</a>
+    <hr style="border: 0; height: 1px; background: linear-gradient(to right, rgba(0,0,0,0), rgba(212, 175, 55, 0.6), rgba(0,0,0,0)); margin: 20px 0;">
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 12px; width: 100%; padding: 5px 0;">
+    
+    <svg viewBox="0 0 448 512" style="width: 17px; height: 17px; fill: #4a148c;"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM224 224a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM96 96a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm0 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm0 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
+
+    <svg viewBox="0 0 512 512" style="width: 17px; height: 17px; fill: #ef6c00;"><path d="M0 144c0-26.5 21.5-48 48-48H272c26.5 0 48 21.5 48 48V368c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V144zm336 96c0-13.3 10.7-24 24-24H464c26.5 0 48 21.5 48 48V464c0 26.5-21.5 48-48 48H320c-26.5 0-48-21.5-48-48V384c13.3 0 24-10.7 24-24V240zM96 192a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm0 144a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm128-144a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm0 144a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg>
+
+    <svg viewBox="0 0 576 512" style="width: 17px; height: 17px; fill: #2e7d32;"><path d="M400 96h16v138c0 55.6-38.7 103.5-91.6 116.3 15.2 25.1 41.2 42.6 71.6 47.1V448h48c17.7 0 32 14.3 32 32s-14.3 32-32 32H136c-17.7 0-32-14.3-32-32s14.3-32 32-32h48V397.4c30.4-4.5 56.4-22 71.6-47.1C210.7 337.5 172 289.6 172 224V96h16c17.7 0 32-14.3 32-32V32C220 14.3 205.7 0 188 0H112C50.1 0 0 50.1 0 112v32c0 47.1 29 87.5 70.1 103.5C88.4 316.4 153.2 368 232 379.7V448H192c-13.3 0-24 10.7-24 24s10.7 24 24 24h192c13.3 0 24-10.7 24-24s-10.7-24-24-24H344V379.7c78.8-11.7 143.6-63.3 161.9-132.2 41.1-16 70.1-56.4 70.1-103.5V112c0-61.9-50.1-112-112-112H388c-17.7 0-32 14.3-32 32v32c0 17.7 14.3 32 32 32zM76.1 144v-32c0-26.5 21.5-48 48-48h11.9v128h-11.9c-26.5 0-48-21.5-48-48zm423.8 0c0 26.5-21.5 48-48 48h-11.9V64h11.9c26.5 0 48 21.5 48 48v32z"/></svg>
+
+    <svg viewBox="0 0 576 512" style="width: 17px; height: 17px; fill: #7b1fa2;"><path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46.4 46.7 34L288 439.6l130.3 68.5c23.5 12.4 51.2-7.7 46.7-34l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"/></svg>
+
+    <svg viewBox="0 0 448 512" style="width: 17px; height: 17px; fill: #0277bd;"><path d="M0 160L224 48l224 112L224 272 0 160zm0 101.3l57.6-28.8L224 320l166.4-87.5 57.6 28.8L224 374.7 0 261.3zm0 101.3l57.6-28.8L224 421.3l166.4-87.5 57.6 28.8L224 476.1 0 362.7z"/></svg>
+
+    <svg viewBox="0 0 512 512" style="width: 17px; height: 17px; fill: #00e676;"><path d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120V256c0 8 4.5 15.5 11.7 19.3l104 56c11.8 6.3 26.5 1.9 32.8-9.8s1.9-26.5-9.8-32.8L280 239.1V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>
+
+    <svg viewBox="0 0 448 512" style="width: 17px; height: 17px; fill: #d84315;"><path d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm144 96c0-17.7-14.3-32-32-32s-32 14.3-32 32v64c0 17.7 14.3 32 32 32s32-14.3 32-32V288z"/></svg>
+
+    <svg viewBox="0 0 320 512" style="width: 17px; height: 17px; fill: #fbc02d;"><path d="M0 64C0 46.3 14.3 32 32 32H288c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-224 384c-8.9 15.3-28.5 20.5-43.8 11.6s-20.5-28.5-11.6-43.8L232.3 96H32C14.3 96 0 81.7 0 64z"/></svg>
+</div>   
 </div> 
 
 
 <div class="container">
+    <!---->
+    <!-- BILHETE PREMIUM - PRÊMIO FÁCIL | RESPONSIVO E CENTRALIZADO -->
+<div style="
+  width: 90%;
+  max-width: 320px;
+  margin: 20px auto; /* Centraliza na tela */
+  background: linear-gradient(135deg, #0b4883 0%, #165DFF 50%, #0095ff 100%);
+  color: #fff;
+  padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 20px);
+  border-radius: 20px;
+  position: relative;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  box-shadow: 
+    0 0 25px #165DFF, 
+    0 8px 30px rgba(0,0,0,0.25),
+    inset 0 -3px 10px rgba(255,255,255,0.2);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  overflow: hidden;
+  animation: brilhoFundo 2s ease-in-out infinite alternate;
 
-    <h2>Gerador de Cotas</h2>
-    <div id="loading" class="loading">Carregando números já existentes...</div>
+  /* Efeito de dente nas bordas */
+  background-image: 
+    radial-gradient(circle at 0 15px, transparent 15px, #0b4883 16px),
+    radial-gradient(circle at 100% 15px, transparent 15px, #0095ff 16px),
+    radial-gradient(circle at 0 calc(100% - 15px), transparent 15px, #0095ff 16px),
+    radial-gradient(circle at 100% calc(100% - 15px), transparent 15px, #0b4883 16px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-repeat: no-repeat;
+">
+
+  <!-- ANIMAÇÕES -->
+  <style>
+    @keyframes luzPiscante {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+    @keyframes brilhoFundo {
+      0% { box-shadow: 0 0 20px #165DFF, 0 0 40px #FFD700, 0 8px 30px rgba(0,0,0,0.25); }
+      100% { box-shadow: 0 0 35px #165DFF, 0 0 60px #FFD700, 0 8px 30px rgba(0,0,0,0.25); }
+    }
+    @keyframes girarBrilho {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulsarValor {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+    .luz {
+      position: absolute;
+      width: clamp(8px, 2vw, 12px);
+      height: clamp(8px, 2vw, 12px);
+      border-radius: 50%;
+      background: #FFD700;
+      box-shadow: 0 0 10px #FFD700, 0 0 20px #FFC107;
+      animation: luzPiscante 1s infinite;
+      z-index: 2;
+    }
+  </style>
+
+  <!-- LUZES PISCANDO EM VOLTA -->
+  <div class="luz" style="top: 10px; left: 10px; animation-delay: 0s;"></div>
+  <div class="luz" style="top: 10px; right: 10px; animation-delay: 0.2s;"></div>
+  <div class="luz" style="bottom: 10px; left: 10px; animation-delay: 0.4s;"></div>
+  <div class="luz" style="bottom: 10px; right: 10px; animation-delay: 0.6s;"></div>
+  <div class="luz" style="top: 50px; left: 5px; animation-delay: 0.8s;"></div>
+  <div class="luz" style="top: 50px; right: 5px; animation-delay: 1s;"></div>
+  <div class="luz" style="bottom: 50px; left: 5px; animation-delay: 1.2s;"></div>
+  <div class="luz" style="bottom: 50px; right: 5px; animation-delay: 1.4s;"></div>
+
+
+  <!-- Efeito de brilho interno giratório -->
+  <div style="
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+    transform: rotate(30deg);
+    animation: girarBrilho 4s linear infinite;
+  "></div>
+
+
+  <!-- Nome Principal -->
+  <h3 style="
+    font-size: clamp(24px, 6vw, 32px);
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin: 10px 0 18px 0;
+    color: #ffffff;
+    text-shadow: 
+      0 0 10px #fff, 
+      0 2px 5px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 3;
+    text-transform: uppercase;
+  ">
+    IMPERDIVEL
+  </h3>
     
+    <div style="background: #111; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; text-align: center; margin: 20px auto; max-width: 320px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);">
+        <p style="color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0; font-family: sans-serif;">
+            Oferta Exclusiva termina em:
+        </p>
+         <div id="countdown" style="color: #ffc107; font-family: monospace; font-size: 32px; font-weight: bold; text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);">
+             00:00:00
+        </div>
+    </div>
+
+
+  <!-- Faixa dourada -->
+  <div style="
+    width: 85%;
+    height: 4px;
+    background: linear-gradient(to right, transparent, #FFD700, #fff, #FFD700, transparent);
+    margin: 0 auto 20px auto;
+    border-radius: 2px;
+    box-shadow: 0 0 8px #FFD700;
+    position: relative;
+    z-index: 3;
+  "></div>
+
+  <!-- Chamada motivacional -->
+  <p style="
+    color: #fff;
+    font-size: clamp(12px, 3vw, 14px);
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 3;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  ">
+    🎟️ Sua chance de ganhar é agora!
+  </p>
+
+  <!-- Valor com ÍCONE -->
+    <p>De</p><br>
+    <div style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: clamp(18px, 5vw, 24px);
+    font-weight: bold;
+    color: red;
+    padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(255,215,0,0.4);
+    box-shadow: inset 0 0 10px rgba(255,215,0,0.2);
+    position: relative;
+    z-index: 3;
+    animation: pulsarValor 1.5s infinite alternate;
+  ">
+    <i class="fa fa-coins" style="font-size: clamp(22px, 5vw, 28px); filter: drop-shadow(0 0 4px #FFD700);"></i>
+    <span>R$ 1,00 Real</span>
+  </div>
+    <br>
+    <p>Por</p>
+    <br>
+  <div style="
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: clamp(18px, 5vw, 24px);
+    font-weight: bold;
+    color: #FFD700;
+    padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    border: 1px solid rgba(255,215,0,0.4);
+    box-shadow: inset 0 0 10px rgba(255,215,0,0.2);
+    position: relative;
+    z-index: 3;
+    animation: pulsarValor 1.5s infinite alternate;
+  ">
+    <i class="fa fa-coins" style="font-size: clamp(22px, 5vw, 28px); filter: drop-shadow(0 0 4px #FFD700);"></i>
+    <span>R$ 0,50 Centavos</span>
+  </div>
+
+  <!-- Frase final -->
+  <p style="
+    margin: 15px 0 0 0;
+    font-size: clamp(14px, 2.5vw, 17px);
+    color: #fff;
+    font-weight: 500;
+    position: relative;
+    z-index: 3;
+    opacity: 0.9;
+    font-style: italic;
+  ">
+     A partir de apenas 50 centavos por cota!
+  </p>
+
+</div>
+
+    <!-- LINHA DIVISÓRIA MODERNA COM BOLINHAS PISCANDO -->
+<div style="
+  width: 100%;
+  margin: 50px auto; /* Mantém o espaçamento que você queria */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+">
+
+  <!-- ANIMAÇÃO DAS BOLINHAS -->
+  <style>
+    @keyframes bolinhaPisca {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+        background-color: #03fc03;
+        box-shadow: 0 0 8px red, 0 0 15px #FFC107;
+      }
+      50% {
+        transform: scale(1.4);
+        opacity: 1;
+        background-color: #fff;
+        box-shadow: 0 0 12px #ffffff, 0 0 20px #FFD700;
+      }
+    }
+    @keyframes linhaBrilha {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    .bolinha {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: bolinhaPisca 1.2s infinite ease-in-out;
+    }
+  </style>
+
+  <!-- Linha esquerda -->
+  <div style="
+    flex: 1;
+    height: 4px;
+    background: linear-gradient(to right, transparent, #165DFF, #0b4883);
+    border-radius: 2px;
+    animation: linhaBrilha 2s infinite alternate;
+  "></div>
+
+  <!-- Bolinhas piscando no meio -->
+  <div class="bolinha" style="animation-delay: 0s;"></div>
+  <div class="bolinha" style="animation-delay: 0.2s;"></div>
+  <div class="bolinha" style="animation-delay: 0.4s;"></div>
+
+  <!-- Linha direita -->
+  <div style="
+    flex: 1;
+    height: 4px;
+    background: linear-gradient(to left, transparent, #165DFF, #0b4883);
+    border-radius: 2px;
+    animation: linhaBrilha 2s infinite alternate;
+  "></div>
+
+</div>
+
+    <div id="loading" class="loading">Carregando números já existentes...</div>    
     <div class="fast-buttons">
-        <button type="button" class="btn-fast" onclick="selecionarRapido(10)">10 Cotas <span>R$ 5,00</span></button>
+        <button type="button" class="btn-fast" onclick="selecionarRapido(15)">15 Cotas <span>R$7,50</span></button>
         <button type="button" class="btn-fast" onclick="selecionarRapido(20)">20 Cotas <span>R$ 10,00</span></button>
         <button type="button" class="btn-fast" onclick="selecionarRapido(30)">30 Cotas <span>R$ 15,00</span></button>
         <button type="button" class="btn-fast" onclick="selecionarRapido(40)">40 Cotas <span>R$ 20,00</span></button>
-        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(50)">50 Cotas <span>R$ 25,00</span></button>
+        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(60)">60 Cotas <span>R$ 30,00</span></button>
+        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(70)">70 Cotas <span>R$ 35,00</span></button>
+        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(80)">80 Cotas <span>R$ 40,00</span></button>
+        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(130)"><span style="color: red; cont-size: 40px;">😍 DESCONTO 😍</span>300 Cotas <span>R$ 140,00</span></button>
     </div>
     
     <div class="form-group">
@@ -330,8 +642,8 @@
         <input type="tel" id="whatsapp" placeholder="Ex: 11999999999">
     </div>
         <div class="form-group">
-        <label for="qtd">Quantidade de Cotas (Mín 10 / Máx 50):</label>
-        <input type="number" id="qtd" min="10" max="50" value="10">
+        <label for="qtd">Quantidade de Cotas <span style="font-size: 10px; color: red;">(Mín 10 / Máx 300)</span>:</label>
+        <input type="number" id="qtd" min="10" max="300" value="10">
     </div>
 
     <button id="btnGenerate" class="btn-generate" onclick="gerarCotas()" disabled>Gerar Cotas</button>
@@ -350,6 +662,8 @@
 
     let numerosIndisponiveis = new Set();
     let cotasGeradas = [];
+    const precoPorCota = 0.50; // <--- ALTERE O VALOR DA COTA AQUI (Use ponto em vez de vírgula)
+
 
     // Carregar números existentes do CSV ao iniciar o site
     async function carregarNumerosExistentes() {
@@ -387,17 +701,13 @@
         return numero;
     }
 
-    function gerarCotas() {
-        const nome = document.getElementById('nome').value.trim();
-        const whatsapp = document.getElementById('whatsapp').value.trim();
-        const qtd = parseInt(document.getElementById('qtd').value);
-
+    
         if (!nome || !whatsapp) {
             alert("Por favor, preencha o Nome e o WhatsApp.");
             return;
         }
-        if (qtd < 10 || qtd > 50) {
-            alert("Você pode gerar de 10 a 50 cotas por vez.");
+        if (qtd < 10 || qtd > 300) {  //Quantidade minha 10 e maxima 300
+            alert("Você pode gerar de 10 a 100 cotas por vez.");
             return;
         }
 
@@ -416,9 +726,13 @@
             listaDiv.appendChild(span);
         }
 
-        document.getElementById('results').style.display = 'block';
+                document.getElementById('results').style.display = 'block';
         document.getElementById('btnConfirm').style.display = 'block';
+        
+        // Rola suavemente até o botão Confirmar e Finalizar
+        document.getElementById('btnConfirm').scrollIntoView({ behavior: 'smooth' });
     }
+
 
     async function confirmarEEnviar() {
         const nome = document.getElementById('nome').value.trim();
@@ -449,10 +763,14 @@
             // Como usamos 'no-cors', não conseguimos ler a resposta diretamente, 
             // mas se não cair no 'catch', o envio foi disparado com sucesso.
             
-            // Prepara a mensagem do WhatsApp
-            const textoMensagem = `Olá ${nome}! Suas cotas foram geradas com sucesso.\n\n*Cotas:* \n${cotasGeradas.join('\n')}`;
+            // Calcula o valor total e formata com duas casas decimais
+            const valorTotal = (cotasGeradas.length * precoPorCota).toFixed(2).replace('.', ',');
+
+            // Prepara a mensagem do WhatsApp com o valor total
+            const textoMensagem = `Olá ${nome}! Suas cotas foram geradas com sucesso.\n\n
+            *Quantidade:* ${cotasGeradas.length} cotas\n*Total:* R$ ${valorTotal}\n\n*Cotas:* \n${cotasGeradas.join('\n')}`;
             const urlWhatsapp = `https://api.whatsapp.com/send?phone=${whatsapp}&text=${encodeURIComponent(textoMensagem)}`;
-            
+   
             // Redireciona para o WhatsApp
             window.location.href = urlWhatsapp;
 
@@ -466,9 +784,12 @@
 
     // Inicializa carregando os dados do CSV
         // Função para preencher automaticamente a quantidade ao clicar no botão rápido
-    function selecionarRapido(quantidade) {
+        function selecionarRapido(quantidade) {
         document.getElementById('qtd').value = quantidade;
+        // Rola suavemente até o campo de nome
+        document.getElementById('nome').scrollIntoView({ behavior: 'smooth' });
     }
+
     carregarNumerosExistentes();
     
         // Função para abrir e fechar o menu modal lateral
@@ -484,6 +805,45 @@
             overlay.classList.remove('active');
         }
     }
+    
+    function iniciarCronometro() {
+    const duracaoTotal = 4 * 60 * 60 * 1000; // <--- ALTERADO PARA 4 HORAS coloca o 4
+    let horarioFinal = localStorage.getItem('cronometro_oferta_4h'); // <--- Nome atualizado com o _4h no final
+
+    if (!horarioFinal) {
+        horarioFinal = Date.now() + duracaoTotal;
+        localStorage.setItem('cronometro_oferta_4h', horarioFinal); // <--- Nome atualizado com o _4h no final
+    }
+
+    const x = setInterval(function() {
+        const agora = Date.now();
+        const distancia = horarioFinal - agora;
+
+        let horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+        let segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+        horas = horas < 10 ? "0" + horas : horas;
+        minutos = minutos < 10 ? "0" + minutes : minutos;
+        segundos = segundos < 10 ? "0" + segundos : segundos;
+
+        const display = document.getElementById("countdown");
+        if (display) {
+            display.innerHTML = horas + ":" + minutos + ":" + segundos;
+        }
+
+        if (distancia < 0) {
+            clearInterval(x);
+            localStorage.removeItem('cronometro_oferta_7h'); // <--- Nome atualizado
+            iniciarCronometro(); // Reinicia o ciclo de 7 horas
+        }
+    }, 1000);
+}
+
+// Executa a função
+iniciarCronometro();
+
+
 
 </script>
 
