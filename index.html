@@ -384,9 +384,9 @@
         
     <span class="close-menu" onclick="toggleMenu(false)">&times;
     </span>
-    </div> <a href="admin.html">Admin</a>
+    </div> <a href="SORTEAR-COTA.html">Admin</a>
     <a href="configuracao.html">Configuração</a>
-    <a href="suporte.html">Suporte</a>
+    <a href="jh.html">Suporte</a>
     <hr style="border: 0; height: 1px; background: linear-gradient(to right, rgba(0,0,0,0), rgba(212, 175, 55, 0.6), rgba(0,0,0,0)); margin: 20px 0;">
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 12px; width: 100%; padding: 5px 0;">
@@ -707,7 +707,7 @@
     <div id="results" class="results">
         <h3>Suas Cotas:</h3>
         <div id="listaCotas"></div>
-        <button id="btnConfirm" class="btn-confirm" onclick="confirmarEEnviar()">Enviar Cotas para o WhatsApp da Administração</button>
+        <button id="btnConfirm" class="btn-confirm" onclick="confirmarEEnviar()">Confirmar e Finalizar</button>
     </div>
 </div>
 
@@ -821,17 +821,30 @@
                 },
                 body: JSON.stringify(payload)
             });
+    
+           // 1. LISTA DE LINKS POR VALOR: Cadastre aqui o link para cada valor possível
+const listaLinksPagamento = {
+    "5,00": "https://mpago.la/LINK_DE_5_REAIS",
+    "7,50": "https://mpago.la/LINK_DE_7_REAIS_E_50",
+    "10,00": "https://mpago.la/LINK_DE_10_REAIS",
+    "15,00": "https://mpago.la/LINK_DE_15_REAIS",
+    "20,00": "https://mpago.la/LINK_DE_20_REAIS",
+    "30,00": "https://mpago.la/LINK_DE_30_REAIS",
+    "35,00": "https://mpago.la/LINK_DE_35_REAIS",
+    "40,00": "https://mpago.la/LINK_DE_40_REAIS",
+    "140,00": "https://mpago.la/LINK_DE_140_REAIS"
+};
 
-            // Como usamos 'no-cors', não conseguimos ler a resposta diretamente, 
-            // mas se não cair no 'catch', o envio foi disparado com sucesso.
-            
-            // Calcula o valor total e formata com duas casas decimais
-            const valorTotal = (cotasGeradas.length * precoPorCota).toFixed(2).replace('.', ',');
+// Calcula o valor total e formata como texto (Ex: "7,50")
+const valorTotal = (cotasGeradas.length * precoPorCota).toFixed(2).replace('.', ',');
 
-            // Prepara a mensagem do WhatsApp com o valor total
-            const textoMensagem = `Olá ${nome}! Suas cotas foram geradas com sucesso.\n\n*Quantidade:* ${cotasGeradas.length} cotas\n*Total:* R$ ${valorTotal}\n\n*Cotas:* \n${cotasGeradas.join('\n')}`;
-            const urlWhatsapp = `https://api.whatsapp.com/send?phone=${whatsapp}&text=${encodeURIComponent(textoMensagem)}`;
-   
+// Busca o link correspondente na lista. Se não achar, usa um link padrão.
+const linkPagamento = listaLinksPagamento[valorTotal] || "https://mpago.la/LINK_PADRAO_CASO_NAO_ENCONTRE";
+
+// Prepara a mensagem do WhatsApp com o link correto inserido
+const textoMensagem = `Olá ${nome}! Suas cotas foram geradas com sucesso.\n\n*Quantidade:* ${cotasGeradas.length} cotas\n*Total:* R$ ${valorTotal}\n\n*Clique aqui para pagar:* ${linkPagamento}\n\n*Cotas:* \n${cotasGeradas.join('\n')}`;
+const urlWhatsapp = `https://api.whatsapp.com/send?phone=${whatsapp}&text=${encodeURIComponent(textoMensagem)}`;
+
             // Redireciona para o WhatsApp
             window.location.href = urlWhatsapp;
 
