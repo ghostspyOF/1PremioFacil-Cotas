@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Contatos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #075e54;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px; /* Aumentado para visualizar melhor as sequências */
+            font-family: monospace;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Área dos botões identificadores (Atualizado) */
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .btn-plus {
+            min-width: 130px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,123,255,0.2);
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .btn-plus .btn-whats {
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .btn-plus .btn-nome {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-top: 2px;
+            max-width: 110px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-plus:hover {
+            background-color: #0056b3;
+            transform: scale(1.03);
+        }
+
+        /* Modal de Visualização */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Ações Extras */
+        .extra-actions {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .btn-success {
+            background-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        #fileInput {
+            display: none;
+        }
+    
+            /* Botão Descobrir Vencedor */
+        .btn-sorteio-principal {
+            background: linear-gradient(135deg, #28a745, #218838);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+        .btn-sorteio-principal:hover {
+            background: linear-gradient(135deg, #218838, #1e7e34);
+        }
+
+        /* Tela do Sorteador (Modal Tela Cheia) */
+        .tela-sorteio {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f172a;
+            color: white;
+            z-index: 2000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sorteio-container {
+            width: 100%;
+            max-width: 450px;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid #334155;
+        }
+
+        .btn-voltar-sorteio {
+            background-color: transparent;
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .btn-voltar-sorteio:hover { background-color: rgba(255,255,255,0.05); color: white; }
+
+        /* Roleta de 7 Dígitos */
+        .roleta-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 25px 0;
+        }
+
+        .digito-slot {
+            width: 45px;
+            height: 65px;
+            background: #0f172a;
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+            font-size: 36px;
+            font-weight: bold;
+            font-family: monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .girando {
+            animation: girarEfeito 0.15s linear infinite;
+        }
+
+        @keyframes girarEfeito {
+            0% { transform: translateY(-20px); opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0.5; }
+        }
+
+        /* Bilhete do Ganhador Estilizado */
+        .bilhete-vencedor {
+            
+            margin-top: 25px;
+            background: linear-gradient(135deg, #fef08a, #fde047);
+            color: #1e293b;
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px dashed #ca8a04;
+            box-shadow: 0 8px 20px rgba(250, 204, 21, 0.4);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .bilhete-vencedor::before, .bilhete-vencedor::after {
+            content: '';
+            position: absolute;
+            width: 20px; height: 20px;
+            background: #1e293b;
+            border-radius: 50%;
+            top: 50%; transform: translateY(-50%);
+        }
+        .bilhete-vencedor::before { left: -12px; }
+        .bilhete-vencedor::after { right: -12px; }
+
+        .bilhete-titulo {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #854d0e;
+            font-weight: bold;
+        }
+
+        .bilhete-numero {
+            font-size: 38px;
+            font-weight: 900;
+            margin: 10px 0;
+            font-family: monospace;
+            color: #0f172a;
+            letter-spacing: 1px;
+        }
+
+        .bilhete-dados {
+            border-top: 1px dashed #ca8a04;
+            padding-top: 10px;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+        <div class="container">
+        <button class="btn-sorteio-principal" onclick="abrirTelaSorteio()">🎉 Descobrir o Vencedor</button>
+        
+        <h2>Cadastrar Informações</h2>
+        <div class="form-group">
+            <label>Nome da Pessoa:</label>
+            <input type="text" id="nome" placeholder="Ex: João Silva">
+        </div>
+        <div class="form-group">
+            <label>WhatsApp (com DDD):</label>
+            <input type="tel" id="whatsapp" placeholder="Ex: 11999999999">
+        </div>
+        <div class="form-group">
+            <label>Sequência de Números (7 dígitos por linha):</label>
+            <textarea id="sequencia" placeholder="5189517&#10;3575463&#10;1380163"></textarea>
+        </div>
+        <button onclick="salvarDados()">Salvar Informações</button>
+    </div>
+
+    <div class="tela-sorteio" id="telaSorteio">
+        <div class="sorteio-container">
+            <h2 style="color: #3b82f6; margin-bottom: 5px;">Sorteador de Sequências</h2>
+            <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">O sistema escolherá aleatoriamente entre os números cadastrados</p>
+            
+            <div class="form-group" style="text-align: left;">
+                <label style="color: #cbd5e1;">Quantidade de números para sortear neste prêmio:</label>
+                <input type="number" id="qtdSorteio" value="1" min="1" style="background: #0f172a; color: white; border: 1px solid #334155;">
+            </div>
+
+            <button onclick="executarSorteio()" style="background-color: #3b82f6;">🎰 Iniciar Sorteio</button>
+
+            <div class="roleta-container">
+                <div class="digito-slot" id="d1">0</div>
+                <div class="digito-slot" id="d2">0</div>
+                <div class="digito-slot" id="d3">0</div>
+                <div class="digito-slot" id="d4">0</div>
+                <div class="digito-slot" id="d5">0</div>
+                <div class="digito-slot" id="d6">0</div>
+                <div class="digito-slot" id="d7">0</div>
+            </div>
+
+                        <div id="containerMultiplosBilhetes" style="display: flex; flex-direction: column; gap: 15px; margin-top: 25px; max-height: 350px; overflow-y: auto; padding-right: 5px;"></div>
+            <button class="btn-voltar-sorteio" onclick="fecharTelaSorteio()">← Voltar ao Gerenciador</button>
+
+                <div class="bilhete-titulo">🎟️ Bilhete Premiado 🎟️</div>
+                <div class="bilhete-numero" id="bilheteNum">0000000</div>
+                <div class="bilhete-dados">
+                    <p><strong>👑 Nome:</strong> <span id="bilheteNome"></span></p>
+                    <p style="margin-top: 5px;"><strong>📱 WhatsApp:</strong> <span id="bilheteWhats"></span></p>
+                </div>
+            </div>
+
+            <button class="btn-voltar-sorteio" onclick="fecharTelaSorteio()">← Voltar ao Gerenciador</button>
+        </div>
+    </div>
+
+
+    <div class="buttons-container" id="listaBotoes"></div>
+
+    <div class="extra-actions">
+        <div class="btn-row">
+            <button class="btn-success" onclick="baixarDadosJSON()">Baixar Dados (.json)</button>
+            <button class="btn-secondary" onclick="dispararUploadJSON()">Entrar em outro celular</button>
+        </div>
+        <input type="file" id="fileInput" accept=".json" onchange="importarDadosJSON(event)">
+    </div>
+
+    <div class="modal" id="modalVisualizar">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharModal()">&times;</span>
+            <h3 style="margin-bottom: 15px; color: #007bff;">Dados Salvos</h3>
+            <p><strong>Nome:</strong> <span id="viewNome"></span></p>
+            <p style="margin-top: 8px;"><strong>WhatsApp:</strong> <span id="viewWhats"></span></p>
+            <p style="margin-top: 8px;"><strong>Sequências Cadastradas:</strong></p>
+            <div id="viewSequencia" style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-top: 5px; font-family: monospace; white-space: pre-line; border: 1px solid #ddd; max-height: 180px; overflow-y: auto;"></div>
+            <button class="btn-secondary" style="margin-top: 15px; padding: 8px;" id="btnExcluir">Excluir Registro</button>
+        </div>
+    </div>
+
+    <script>
+        let bancoDados = [];
+
+        window.onload = function() {
+            if (localStorage.getItem('dadosSite')) {
+                bancoDados = JSON.parse(localStorage.getItem('dadosSite'));
+                renderizarBotoes();
+            }
+        };
+
+        // Função auxiliar que separa o texto da text area em uma lista de números limpos
+        function extrairNumeros(texto) {
+            return texto.split('\n')
+                        .map(linha => linha.trim())
+                        .filter(linha => linha.length > 0);
+        }
+
+        // Verifica se algum número novo já existe no banco de dados atual
+        function encontrarDuplicado(novosNumeros, idIgnorar = null) {
+            for (let numeroNovo of novosNumeros) {
+                for (let registroExistente of bancoDados) {
+                    // Se estivermos editando, ignora o próprio registro
+                    if (idIgnorar && registroExistente.id === idIgnorar) continue;
+
+                    let numerosExistentes = extrairNumeros(registroExistente.sequencia);
+                    if (numerosExistentes.includes(numeroNovo)) {
+                        return {
+                            numero: numeroNovo,
+                            contatoNome: registroExistente.nome,
+                            contatoWhats: registroExistente.whatsapp
+                        };
+                    }
+                }
+            }
+            return null; // Nenhum número repetido encontrado
+        }
+
+        function salvarDados() {
+            const nome = document.getElementById('nome').value.trim();
+            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const sequencia = document.getElementById('sequencia').value.trim();
+
+            if (!nome || !whatsapp || !sequencia) {
+                alert('Por favor, preencha todos os campos antes de salvar!');
+                return;
+            }
+
+            // Validação de Duplicadas
+            const novosNumeros = extrairNumeros(sequencia);
+            const duplicado = encontrarDuplicado(novosNumeros);
+
+            if (duplicado) {
+                alert(`⚠️ ATENÇÃO: NÚMERO REPETIDO DETECTADO!\n\nO número "${duplicado.numero}" já está cadastrado no botão do contato:\n• Nome: ${duplicado.contatoNome}\n• WhatsApp: ${duplicado.contatoWhats}\n\nO cadastro atual NÃO foi salvo.`);
+                return; // Impede o salvamento
+            }
+
+            const novoRegistro = {
+                id: Date.now(),
+                nome: nome,
+                whatsapp: whatsapp,
+                sequencia: sequencia
+            };
+
+            bancoDados.push(novoRegistro);
+            atualizarLocalStorage();
+            renderizarBotoes();
+
+            // Limpa o formulário
+            document.getElementById('nome').value = '';
+            document.getElementById('whatsapp').value = '';
+            document.getElementById('sequencia').value = '';
+        }
+
+        // Renderiza os botões mostrando o WhatsApp e o Nome
+        function renderizarBotoes() {
+            const container = document.getElementById('listaBotoes');
+            container.innerHTML = ''; 
+
+            bancoDados.forEach((registro) => {
+                const botao = document.createElement('button');
+                botao.className = 'btn-plus';
+                botao.onclick = () => abrirModal(registro);
+
+                // Adiciona o WhatsApp dentro do botão
+                const spanWhats = document.createElement('span');
+                spanWhats.className = 'btn-whats';
+                spanWhats.innerText = registro.whatsapp;
+                
+                // Adiciona o Nome dentro do botão
+                const spanNome = document.createElement('span');
+                spanNome.className = 'btn-nome';
+                spanNome.innerText = registro.nome;
+
+                botao.appendChild(spanWhats);
+                botao.appendChild(spanNome);
+                container.appendChild(botao);
+            });
+        }
+
+        function atualizarLocalStorage() {
+            localStorage.setItem('dadosSite', JSON.stringify(bancoDados));
+        }
+
+        function abrirModal(registro) {
+            document.getElementById('viewNome').innerText = registro.nome;
+            document.getElementById('viewWhats').innerText = registro.whatsapp;
+            document.getElementById('viewSequencia').innerText = registro.sequencia;
+            
+            document.getElementById('btnExcluir').onclick = function() {
+                if(confirm("Tem certeza que deseja apagar esse registro?")) {
+                    bancoDados = bancoDados.filter(item => item.id !== registro.id);
+                    atualizarLocalStorage();
+                    renderizarBotoes();
+                    fecharModal();
+                }
+            };
+
+            document.getElementById('modalVisualizar').style.display = 'flex';
+        }
+
+        function fecharModal() {
+            document.getElementById('modalVisualizar').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalVisualizar');
+            if (event.target == modal) {
+                fecharModal();
+            }
+        }
+
+        function baixarDadosJSON() {
+            if (bancoDados.length === 0) {
+                alert('Não há dados para baixar.');
+                return;
+            }
+            const textoExportar = JSON.stringify(bancoDados, null, 2);
+            const blob = new Blob([textoExportar], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.download = 'backup_contatos.json';
+            link.href = window.URL.createObjectURL(blob);
+            link.click();
+        }
+
+        function disparaUploadJSON() {
+            document.getElementById('fileInput').click();
+        }
+
+        // Disparar o seletor de arquivos
+        function dispararUploadJSON() {
+            document.getElementById('fileInput').click();
+        }
+
+        function importarDadosJSON(event) {
+            const arquivo = event.target.files[0];
+            if (!arquivo) return;
+
+            const leitor = new FileReader();
+            leitor.onload = function(e) {
+                try {
+                    const dadosConvertidos = JSON.parse(e.target.result);
+                    
+                    if (Array.isArray(dadosConvertidos)) {
+                        if (confirm("Isso irá substituir os dados atuais deste aparelho pelos dados do arquivo JSON importado. Deseja continuar?")) {
+                            bancoDados = dadosConvertidos;
+                            atualizarLocalStorage();
+                            renderizarBotoes();
+                            alert("Dados importados com sucesso!");
+                        }
+                    } else {
+                        alert("O arquivo selecionado não possui um formato válido.");
+                    }
+                } catch (erro) {
+                    alert("Erro ao ler o arquivo JSON.");
+                }
+                document.getElementById('fileInput').value = '';
+            };
+            leitor.readAsText(arquivo);
+        }
+            // FUNÇÕES DA TELA DE SORTEIO
+                     // SUBSTITUA ESTE BLOCO COMPLETO DE FUNÇÕES NO SEU SCRIPT:
+
+        function abrirTelaSorteio() {
+            document.getElementById('telaSorteio').style.display = 'flex';
+            document.getElementById('containerMultiplosBilhetes').innerHTML = ''; 
+            resetarRoleta();
+        }
+
+        function fecharTelaSorteio() {
+            if (sorteioEmAndamento) {
+                alert("Aguarde o término do sorteio atual!");
+                return;
+            }
+            document.getElementById('telaSorteio').style.display = 'none';
+        }
+
+        function resetarRoleta() {
+            for (let i = 1; i <= 7; i++) {
+                document.getElementById(`d${i}`).innerText = '0';
+                document.getElementById(`d${i}`).classList.remove('girando');
+            }
+        }
+
+        let sorteioEmAndamento = false;
+
+        function executarSorteio() {
+            if (sorteioEmAndamento) return;
+
+            let todosOsNumerosDisponiveis = [];
+            bancoDados.forEach(registro => {
+                let numeros = extrairNumeros(registro.sequencia);
+                numeros.forEach(num => {
+                    if(num.length === 7) {
+                        todosOsNumerosDisponiveis.push({
+                            numero: num,
+                            nome: registro.nome,
+                            whatsapp: registro.whatsapp
+                        });
+                    }
+                });
+            });
+
+            if (todosOsNumerosDisponiveis.length === 0) {
+                alert('Não há nenhuma sequência válida de 7 dígitos cadastrada para sortear!');
+                return;
+            }
+
+            let qtdSorteio = parseInt(document.getElementById('qtdSorteio').value) || 1;
+            if (qtdSorteio < 1) qtdSorteio = 1;
+
+            sorteioEmAndamento = true;
+            document.getElementById('containerMultiplosBilhetes').innerHTML = ''; // Limpa resultados anteriores
+
+            // Função interna recursiva que gerencia a rodada de cada bilhete individualmente
+            function rodarSorteioIndividual(bilheteAtual) {
+                if (bilheteAtual > qtdSorteio) {
+                    // Acabaram todos os sorteios solicitados
+                    sorteioEmAndamento = false;
+                    return;
+                }
+
+                // 1. Liga o visual de rotação e inicia o embaralhamento louco
+                for (let i = 1; i <= 7; i++) {
+                    document.getElementById(`d${i}`).classList.add('girando');
+                }
+
+                const intervaloEmbolado = setInterval(() => {
+                    for (let i = 1; i <= 7; i++) {
+                        document.getElementById(`d${i}`).innerText = Math.floor(Math.random() * 10);
+                    }
+                }, 50);
+
+                // 2. Escolhe um número premiado aleatório para esta rodada específica
+                const indiceAleatorio = Math.floor(Math.random() * todosOsNumerosDisponiveis.length);
+                const premiado = todosOsNumerosDisponiveis[indiceAleatorio];
+                const stringNumero = premiado.numero;
+
+                // 3. Aguarda os 10 segundos de suspense antes de parar
+                setTimeout(() => {
+                    clearInterval(intervaloEmbolado); // Interrompe o giro embolado rápido
+
+                    // 4. Parada progressiva clássica dígito por dígito
+                    let digitoAtual = 1;
+                    const intervaloParada = setInterval(() => {
+                        if (digitoAtual <= 7) {
+                            const slot = document.getElementById(`d${digitoAtual}`);
+                            slot.classList.remove('girando');
+                            slot.innerText = stringNumero[digitoAtual - 1];
+                            digitoAtual++;
+                        } else {
+                            clearInterval(intervaloParada);
+                            
+                            // 5. Revela o bilhete premiado na lista acumulativa lá embaixo
+                            exibirBilheteFinal(premiado, bilheteAtual);
+
+                            // 6. Aguarda um pequeno intervalo de 2 segundos para o público comemorar,
+                            // limpa e reinicia o processo para o próximo prêmio da fila
+                            setTimeout(() => {
+                                if (bilheteAtual < qtdSorteio) {
+                                    resetarRoleta();
+                                    // Chama o próximo com um delayzinho estratégico
+                                    setTimeout(() => {
+                                        rodarSorteioIndividual(bilheteAtual + 1);
+                                    }, 500);
+                                } else {
+                                    // Fim de tudo
+                                    rodarSorteioIndividual(bilheteAtual + 1);
+                                }
+                            }, 2000);
+                        }
+                    }, 300);
+                }, 10000); // 10 Segundos cravados rodando embolado por bilhete
+            }
+
+            // Dispara a sequência começando do primeiro bilhete
+            rodarSorteioIndividual(1);
+        }
+
+        function exibirBilheteFinal(premiado, ordem) {
+            const container = document.getElementById('containerMultiplosBilhetes');
+            
+            const htmlBilhete = `
+                <div class="bilhete-vencedor">
+                    <div class="bilhete-titulo">🎟️ Bilhete Premiado #${ordem} 🎟️</div>
+                    <div class="bilhete-numero">${premiado.numero}</div>
+                    <div class="bilhete-dados">
+                        <p><strong>👑 Nome:</strong> <span>${premiado.nome}</span></p>
+                        <p style="margin-top: 5px;"><strong>📱 WhatsApp:</strong> <span>${premiado.whatsapp}</span></p>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML += htmlBilhete;
+            // Rola automaticamente para baixo para o usuário ver o bilhete novo chegar
+            container.scrollTop = container.scrollHeight;
+        }
+
+                       
+
+</script>
+</body>
+</html>
+    
