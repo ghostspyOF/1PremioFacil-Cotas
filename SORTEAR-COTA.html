@@ -419,11 +419,18 @@
         };
 
         // Função auxiliar que separa o texto da text area em uma lista de números limpos
-        function extrairNumeros(texto) {
-            return texto.split('\n')
-                        .map(linha => linha.trim())
-                        .filter(linha => linha.length > 0);
-        }
+      function extrairNumeros(texto) {
+    // 1. Substitui quebras de linha por traços para unificar o texto
+    let textoUnificado = texto.replace(/\n/g, ' - ');
+    
+    // 2. Divide o texto por cada traço encontrado
+    return textoUnificado.split('-')
+                // 3. Limpa espaços vazios antes e depois de cada número
+                .map(linha => linha.trim())
+                // 4. Filtra e ignora campos que ficaram totalmente vazios
+                .filter(linha => linha.length > 0);
+}
+
 
         // Verifica se algum número novo já existe no banco de dados atual
         function encontrarDuplicado(novosNumeros, idIgnorar = null) {
@@ -730,4 +737,3 @@
 </script>
 </body>
 </html>
-    
