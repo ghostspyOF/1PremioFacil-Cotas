@@ -475,7 +475,39 @@
             <textarea id="sequencia" placeholder="5189517&#10;3575463&#10;1380163"></textarea>
         </div>
         <button onclick="salvarDados()">Salvar Informações</button>
-    </div>
+        <!-- Botão Extraí Cotas - Centralizado -->
+<div style="text-align: center; margin: 30px 0;">
+  <a 
+    href="Extrai-Cotas.html" 
+    style="
+      display: inline-block;
+      background: linear-gradient(135deg, #0b4883 0%, #165DFF 100%);
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 14px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(22, 93, 255, 0.3);
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 215, 0, 0.4);
+    "
+    onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(22, 93, 255, 0.4), 0 0 12px #FFD700';"
+    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(22, 93, 255, 0.3)';"
+  >
+    <i class="fa fa-clone" style="margin-right: 8px;"></i>
+    Extraí Cotas
+  </a>
+</div>
+               <div class="extra-actions">
+        <div class="btn-row">
+            <button class="btn-success" onclick="baixarDadosJSON()">Baixar Dados (.json)</button>
+            <button class="btn-secondary" onclick="dispararUploadJSON()">Entrar em outro celular</button>
+        </div>
+        <input type="file" id="fileInput" accept=".json" onchange="importarDadosJSON(event)">
+               </div>
+        </div>
 
     <div class="tela-sorteio" id="telaSorteio">
         <div class="sorteio-container">
@@ -516,14 +548,6 @@
 
 
     <div class="buttons-container" id="listaBotoes"></div>
-
-    <div class="extra-actions">
-        <div class="btn-row">
-            <button class="btn-success" onclick="baixarDadosJSON()">Baixar Dados (.json)</button>
-            <button class="btn-secondary" onclick="dispararUploadJSON()">Entrar em outro celular</button>
-        </div>
-        <input type="file" id="fileInput" accept=".json" onchange="importarDadosJSON(event)">
-    </div>
 
     <div class="modal" id="modalVisualizar">
         <div class="modal-content">
