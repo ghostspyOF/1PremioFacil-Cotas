@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -472,34 +473,12 @@
         </div>
         <div class="form-group">
             <label>Sequência de Números (7 dígitos por linha):</label>
-            <textarea id="sequencia" placeholder="5189517&#10;3575463&#10;1380163"></textarea>
+            <textarea id="sequencia" placeholder="5189517&#10;3575463&#10;1380163" oninput="ajustarTextoAutomatico(this)"></textarea>
+
         </div>
-        <button onclick="salvarDados()">Salvar Informações</button>
-        <!-- Botão Extraí Cotas - Centralizado -->
-<div style="text-align: center; margin: 30px 0;">
-  <a 
-    href="Extrai-Cotas.html" 
-    style="
-      display: inline-block;
-      background: linear-gradient(135deg, #0b4883 0%, #165DFF 100%);
-      color: #ffffff;
-      font-weight: bold;
-      font-size: 16px;
-      padding: 14px 32px;
-      border-radius: 12px;
-      text-decoration: none;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(22, 93, 255, 0.3);
-      transition: all 0.3s ease;
-      border: 2px solid rgba(255, 215, 0, 0.4);
-    "
-    onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(22, 93, 255, 0.4), 0 0 12px #FFD700';"
-    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(22, 93, 255, 0.3)';"
-  >
-    <i class="fa fa-clone" style="margin-right: 8px;"></i>
-    Extraí Cotas
-  </a>
-</div>
+        
+        <button id="btnSalvarPrincipal" onclick="salvarDados()">Salvar Informações</button>
+
                <div class="extra-actions">
         <div class="btn-row">
             <button class="btn-success" onclick="baixarDadosJSON()">Baixar Dados (.json)</button>
@@ -665,6 +644,38 @@ document.getElementById('authSenha').addEventListener('keypress', function (e) {
             return null; // Nenhum número repetido encontrado
         }
 
+                
+                // Nova função: Executada assim que você COLA o texto no campo
+        function ajustarTextoAutomatico(campo) {
+            let texto = campo.value;
+            
+            if (texto.includes("*Cotas:*") && texto.includes("*Clique para nos enviar:")) {
+                // 1. Extrai e quebra as cotas por linha
+                const parteCotas = texto.split("*Cotas:*")[1].split("*Clique para nos enviar:")[0];
+                const cotasLimpas = parteCotas.replace(/\s+/g, ' ').trim().replace(/ - /g, '\n');
+
+                // 2. Extrai o WhatsApp (apenas números)
+                const parteContato = texto.split("*Contato:*")[1];
+                const whatsappExtraido = parteContato.split("\n")[0].replace(/\D/g, '').trim();
+
+                // 3. Extrai o Nome
+                const parteNome = texto.split("*Nome:*")[1];
+                const nomeExtraido = parteNome.split("\n")[0].trim();
+
+                // Preenche os campos na tela para você conferir
+                document.getElementById('nome').value = nomeExtraido;
+                document.getElementById('whatsapp').value = whatsappExtraido;
+                campo.value = cotasLimpas;
+
+                // Altera o botão para o modo de Confirmação (Vermelho)
+                const botao = document.getElementById('btnSalvarPrincipal');
+                botao.style.background = '#dc2626'; // Vermelho vivo
+                botao.innerText = '⚠️ Confirmar e Salvar';
+                botao.style.boxShadow = '0 0 15px rgba(220, 38, 38, 0.5)';
+            }
+        }
+
+        // Função de salvar atualizada para resetar o botão depois
         function salvarDados() {
             const nome = document.getElementById('nome').value.trim();
             const whatsapp = document.getElementById('whatsapp').value.trim();
@@ -681,7 +692,7 @@ document.getElementById('authSenha').addEventListener('keypress', function (e) {
 
             if (duplicado) {
                 alert(`⚠️ ATENÇÃO: NÚMERO REPETIDO DETECTADO!\n\nO número "${duplicado.numero}" já está cadastrado no botão do contato:\n• Nome: ${duplicado.contatoNome}\n• WhatsApp: ${duplicado.contatoWhats}\n\nO cadastro atual NÃO foi salvo.`);
-                return; // Impede o salvamento
+                return; 
             }
 
             const novoRegistro = {
@@ -699,7 +710,14 @@ document.getElementById('authSenha').addEventListener('keypress', function (e) {
             document.getElementById('nome').value = '';
             document.getElementById('whatsapp').value = '';
             document.getElementById('sequencia').value = '';
+
+            // Reseta o botão para o Azul original pós-salvamento
+            const botao = document.getElementById('btnSalvarPrincipal');
+            botao.style.background = '#007bff'; 
+            botao.innerText = 'Salvar Informações';
+            botao.style.boxShadow = 'none';
         }
+
 
         // Renderiza os botões mostrando o WhatsApp e o Nome
         function renderizarBotoes() {
