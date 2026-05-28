@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -645,42 +646,31 @@ document.getElementById('authSenha').addEventListener('keypress', function (e) {
         }
 
                 
-                // Substitua a função inteira por esta:
-        function ajustarTextoAutomatico(campo) {
+                // Nova função: Executada assim que você COLA o texto no campo
+                function ajustarTextoAutomatico(campo) {
             let texto = campo.value;
             
-            // Verifica se o texto colado contém os novos marcadores obrigatórios
-            if (texto.includes("*Cotas:*") && texto.includes("*Nome:*") && texto.includes("*Contato:*")) {
-                
-                // 1. Extrai o Nome que está na frente de *Nome:*
-                const parteNome = texto.split("*Nome:*")[1];
-                const nomeExtraido = parteNome.split("\n")[0].trim();
+            if (texto.includes("*Cotas:*") && texto.includes("*AGRADECIMENTOS:*")) {
+                // 1. Extrai e isola apenas as cotas que estão entre *Cotas:* e *AGRADECIMENTOS:*
+                const parteCotas = texto.split("*Cotas:*")[1].split("*AGRADECIMENTOS:*")[0];
+                const cotasLimpas = parteCotas.replace(/\s+/g, ' ').trim().replace(/ - /g, '\n');
 
-                // 2. Extrai o WhatsApp que está na frente de *Contato:*
+                // 2. Extrai o WhatsApp (apenas números) que está na frente de *Contato:*
                 const parteContato = texto.split("*Contato:*")[1];
                 const whatsappExtraido = parteContato.split("\n")[0].replace(/\D/g, '').trim();
 
-                // 3. Extrai as Cotas de forma precisa
-                // Pega tudo após a palavra *Cotas:*
-                let de OndeComecaCotas = texto.split("*Cotas:*")[1];
-                // Remove possíveis textos de encerramento ou espaços extras da mensagem abaixo das cotas
-                if (deOndeComecaCotas.includes("*AGRADECIMENTOS:*")) {
-                    deOndeComecaCotas = deOndeComecaCotas.split("*AGRADECIMENTOS:*")[0];
-                } else if (deOndeComecaCotas.includes("*Clique para nos enviar:*")) {
-                    deOndeComecaCotas = deOndeComecaCotas.split("*Clique para nos enviar:*")[0];
-                }
-                
-                // Limpa múltiplos espaços/quebras de linha e padroniza a separação por quebra de linha individual (\n)
-                const cotasLimpas = deOndeComecaCotas.replace(/\s+/g, ' ').trim().replace(/ - /g, '\n');
+                // 3. Extrai o Nome que está na frente de *Nome:*
+                const parteNome = texto.split("*Nome:*")[1];
+                const nomeExtraido = parteNome.split("\n")[0].trim();
 
-                // Preenche os respectivos campos na tela para conferência rápida
+                // Preenche os campos na tela para conferência rápida
                 document.getElementById('nome').value = nomeExtraido;
                 document.getElementById('whatsapp').value = whatsappExtraido;
-                campo.value = cotasLimpas;
+                campo.value = cotasLimpas; // Substitui todo o texto colado apenas pelas cotas limpas
 
-                // Altera dinamicamente o botão principal para o modo de Confirmação em Vermelho
+                // Altera o botão para o modo de Confirmação (Vermelho)
                 const botao = document.getElementById('btnSalvarPrincipal');
-                botao.style.background = '#dc2626'; // Vermelho de atenção
+                botao.style.background = '#dc2626'; // Vermelho vivo
                 botao.innerText = '⚠️ Confirmar e Salvar';
                 botao.style.boxShadow = '0 0 15px rgba(220, 38, 38, 0.5)';
             }
