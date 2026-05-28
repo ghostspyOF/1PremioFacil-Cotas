@@ -54,37 +54,44 @@
     }
 }
 
-/* 💻 MUDANÇA PARA COMPUTADOR (Telas grandes) */
+/* 💻 MUDANÇA PARA COMPUTADOR (Telas grandes) - CORRIGIDO */
 @media (min-width: 1024px) {
     .container {
-        max-width: 950px; /* O site se espalha bem na tela do PC */
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Divide o site em duas colunas LADO A LADO */
-        gap: 30px;
-        align-items: start;
+        max-width: 950px; 
+        display: flex;
+        flex-direction: row; /* Alinha o bilhete e o formulário lado a lado */
+        gap: 40px;
+        align-items: flex-start;
+        justify-content: center;
     }
 
-    /* O Bilhete Azul vai ficar fixo na coluna da Esquerda */
-    .container > div:first-child {
-        grid-column: 1;
-        width: 100%;
+    /* O Bilhete Azul (primeiro elemento filho) */
+    .container > div:first-of-type {
+        flex: 1;
+        max-width: 360px; /* Impede o bilhete de esticar demais */
         margin: 0 !important;
     }
 
-    /* A linha divisória com bolinhas some no PC (não precisa dela lado a lado) */
-    .container > div:nth-child(2) {
-        display: none; 
+    /* A linha divisória com bolinhas some no PC */
+    .container > div:nth-of-type(2) {
+        display: none !important; 
     }
 
-    /* Tudo o que é formulário e botões vai para a coluna da Direita */
-    #loading, .fast-buttons, .form-group, .btn-generate, .results {
-        grid-column: 2;
+    /* Criamos um bloco invisível no HTML para envelopar o formulário (passo 2) */
+    .form-wrapper {
+        flex: 1.2;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
+
+    /* Ajuste dos botões rápidos para preencher bem o espaço no PC */
     .fast-buttons {
-        grid-template-columns: repeat(3, 1fr); /* Botões organizados em 3 colunas no PC */
+        grid-template-columns: repeat(4, 1fr) !important; /* Fica em 4 colunas organizadas */
+        width: 100%;
     }
     .fast-buttons button[style*="grid-column: span 2;"] {
-        grid-column: span 3 !important;
+        grid-column: span 2 !important; /* Mantém o alinhamento proporcional */
     }
 }
 
@@ -337,14 +344,14 @@
 }
 
 
-    </style>
+</style>
 </head>
 <body>
 
 <div class="header-top">
     
      <div class="header-left">
-        <img src="logo.png" alt="Prêmio Fácil" style="height: 40px; width: auto; border-radius: 0 17px 0 17px; display: block;">
+        <img src="Imgs/logo.png" alt="Prêmio Fácil" style="height: 40px; width: auto; border-radius: 0 17px 0 17px; display: block;">
     </div>
     
     <div class="header-center">
@@ -380,9 +387,8 @@
               display: inline-block;">
         PRÊMIO FÁCIL
     </p>
-</div>
+</div>       
 
-        
     <span class="close-menu" onclick="toggleMenu(false)">&times;
     </span>
     </div> <a href="SORTEAR-COTA.html">REALIZAR COTAS VENCEDORAS</a>
@@ -412,307 +418,128 @@
 
 
 <div class="container">
-    <!---->
-    <!-- BILHETE PREMIUM - PRÊMIO FÁCIL | RESPONSIVO E CENTRALIZADO -->
-<div style="
-  width: 90%;
-  max-width: 320px;
-  margin: 20px auto; /* Centraliza na tela */
-  background: linear-gradient(135deg, #0b4883 0%, #165DFF 50%, #0095ff 100%);
-  color: #fff;
-  padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 20px);
-  border-radius: 20px;
-  position: relative;
-  text-align: center;
-  font-family: Arial, sans-serif;
-  box-shadow: 
-    0 0 25px #165DFF, 
-    0 8px 30px rgba(0,0,0,0.25),
-    inset 0 -3px 10px rgba(255,255,255,0.2);
-  border: 3px solid transparent;
-  background-clip: padding-box;
-  overflow: hidden;
-  animation: brilhoFundo 2s ease-in-out infinite alternate;
-
-  /* Efeito de dente nas bordas */
-  background-image: 
-    radial-gradient(circle at 0 15px, transparent 15px, #0b4883 16px),
-    radial-gradient(circle at 100% 15px, transparent 15px, #0095ff 16px),
-    radial-gradient(circle at 0 calc(100% - 15px), transparent 15px, #0095ff 16px),
-    radial-gradient(circle at 100% calc(100% - 15px), transparent 15px, #0b4883 16px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
-  background-repeat: no-repeat;
-">
-
-  <!-- ANIMAÇÕES -->
-  <style>
-    @keyframes luzPiscante {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.2); }
-    }
-    @keyframes brilhoFundo {
-      0% { box-shadow: 0 0 20px #165DFF, 0 0 40px #FFD700, 0 8px 30px rgba(0,0,0,0.25); }
-      100% { box-shadow: 0 0 35px #165DFF, 0 0 60px #FFD700, 0 8px 30px rgba(0,0,0,0.25); }
-    }
-    @keyframes girarBrilho {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes pulsarValor {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.05); }
-    }
-    .luz {
-      position: absolute;
-      width: clamp(8px, 2vw, 12px);
-      height: clamp(8px, 2vw, 12px);
-      border-radius: 50%;
-      background: #FFD700;
-      box-shadow: 0 0 10px #FFD700, 0 0 20px #FFC107;
-      animation: luzPiscante 1s infinite;
-      z-index: 2;
-    }
-  </style>
-
-  <!-- LUZES PISCANDO EM VOLTA -->
-  <div class="luz" style="top: 10px; left: 10px; animation-delay: 0s;"></div>
-  <div class="luz" style="top: 10px; right: 10px; animation-delay: 0.2s;"></div>
-  <div class="luz" style="bottom: 10px; left: 10px; animation-delay: 0.4s;"></div>
-  <div class="luz" style="bottom: 10px; right: 10px; animation-delay: 0.6s;"></div>
-  <div class="luz" style="top: 50px; left: 5px; animation-delay: 0.8s;"></div>
-  <div class="luz" style="top: 50px; right: 5px; animation-delay: 1s;"></div>
-  <div class="luz" style="bottom: 50px; left: 5px; animation-delay: 1.2s;"></div>
-  <div class="luz" style="bottom: 50px; right: 5px; animation-delay: 1.4s;"></div>
-
-
-  <!-- Efeito de brilho interno giratório -->
-  <div style="
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
-    transform: rotate(30deg);
-    animation: girarBrilho 4s linear infinite;
-  "></div>
-
-
-  <!-- Nome Principal -->
-  <h3 style="
-    font-size: clamp(24px, 6vw, 32px);
-    font-weight: 900;
-    letter-spacing: 2px;
-    margin: 10px 0 18px 0;
-    color: #ffffff;
-    text-shadow: 
-      0 0 10px #fff, 
-      0 2px 5px rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 3;
-    text-transform: uppercase;
-  ">
-    IMPERDÍVEL
-  </h3>
     
-    <div style="background: #111; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; text-align: center; margin: 20px auto; max-width: 320px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);">
-        <p style="color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0; font-family: sans-serif;">
-            Oferta Exclusiva termina em:
-        </p>
-         <div id="countdown" style="color: #ffc107; font-family: monospace; font-size: 32px; font-weight: bold; text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);">
-             00:00:00
+    <div style="
+      width: 90%;
+      max-width: 320px;
+      margin: 20px auto;
+      background: linear-gradient(135deg, #0b4883 0%, #165DFF 50%, #0095ff 100%);
+      color: #fff;
+      padding: clamp(20px, 5vw, 30px) clamp(15px, 4vw, 20px);
+      border-radius: 20px;
+      position: relative;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 0 25px #165DFF, 0 8px 30px rgba(0,0,0,0.25), inset 0 -3px 10px rgba(255,255,255,0.2);
+      border: 3px solid transparent;
+      background-clip: padding-box;
+      overflow: hidden;
+      animation: brilhoFundo 2s ease-in-out infinite alternate;
+      background-image: 
+        radial-gradient(circle at 0 15px, transparent 15px, #0b4883 16px),
+        radial-gradient(circle at 100% 15px, transparent 15px, #0095ff 16px),
+        radial-gradient(circle at 0 calc(100% - 15px), transparent 15px, #0095ff 16px),
+        radial-gradient(circle at 100% calc(100% - 15px), transparent 15px, #0b4883 16px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+      background-repeat: no-repeat;
+    ">
+
+      <style>
+        @keyframes luzPiscante { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.2); } }
+        @keyframes brilhoFundo { 0% { box-shadow: 0 0 20px #165DFF, 0 0 40px #FFD700, 0 8px 30px rgba(0,0,0,0.25); } 100% { box-shadow: 0 0 35px #165DFF, 0 0 60px #FFD700, 0 8px 30px rgba(0,0,0,0.25); } }
+        @keyframes girarBrilho { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulsarValor { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+        .luz { position: absolute; width: clamp(8px, 2vw, 12px); height: clamp(8px, 2vw, 12px); border-radius: 50%; background: #FFD700; box-shadow: 0 0 10px #FFD700, 0 0 20px #FFC107; animation: luzPiscante 1s infinite; z-index: 2; }
+      </style>
+
+      <div class="luz" style="top: 10px; left: 10px; animation-delay: 0s;"></div>
+      <div class="luz" style="top: 10px; right: 10px; animation-delay: 0.2s;"></div>
+      <div class="luz" style="bottom: 10px; left: 10px; animation-delay: 0.4s;"></div>
+      <div class="luz" style="bottom: 10px; right: 10px; animation-delay: 0.6s;"></div>
+
+      <h3 style="font-size: clamp(24px, 6vw, 32px); font-weight: 900; letter-spacing: 2px; margin: 10px 0 18px 0; color: #ffffff; text-shadow: 0 0 10px #fff, 0 2px 5px rgba(0,0,0,0.3); position: relative; z-index: 3; text-transform: uppercase;">
+        IMPERDÍVEL
+      </h3>
+        
+      <div style="background: #111; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; text-align: center; margin: 20px auto; max-width: 320px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);">
+          <p style="color: #fff; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0; font-family: sans-serif;">
+              Oferta Exclusiva termina em:
+          </p>
+          <div id="countdown" style="color: #ffc107; font-family: monospace; font-size: 32px; font-weight: bold; text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);">
+               00:00:00
+          </div>
+      </div>
+
+      <div style="width: 85%; height: 4px; background: linear-gradient(to right, transparent, #FFD700, #fff, #FFD700, transparent); margin: 0 auto 20px auto; border-radius: 2px; box-shadow: 0 0 8px #FFD700; position: relative; z-index: 3;"></div>
+
+      <p style="color: #fff; font-size: clamp(12px, 3vw, 14px); font-weight: 600; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 1px; position: relative; z-index: 3; text-shadow: 0 1px 3px rgba(0,0,0,0.3);">
+        🎟️ Sua chance de ganhar é agora!
+      </p>
+
+      <p>De</p>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 10px; font-size: clamp(18px, 5vw, 24px); font-weight: bold; color: red; padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px); background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,215,0,0.4); box-shadow: inset 0 0 10px rgba(255,215,0,0.2); position: relative; z-index: 3;">
+        <span>R$ 1,00 Real</span>
+      </div>
+      <br>
+      <p>Por</p>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 10px; font-size: clamp(18px, 5vw, 24px); font-weight: bold; color: #FFD700; padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px); background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,215,0,0.4); box-shadow: inset 0 0 10px rgba(255,215,0,0.2); position: relative; z-index: 3; animation: pulsarValor 1.5s infinite alternate;">
+        <span>R$ 0,50 Centavos</span>
+      </div>
+
+      <p style="margin: 15px 0 0 0; font-size: clamp(14px, 2.5vw, 17px); color: #fff; font-weight: 500; position: relative; z-index: 3; opacity: 0.9; font-style: italic;">
+         A partir de apenas 50 centavos por cota!
+      </p>
+    </div>
+
+    <div style="width: 100%; margin: 50px auto; display: flex; align-items: center; justify-content: center; gap: 12px; position: relative;" class="divisoria-bolinhas">
+      <style>
+        @keyframes bolinhaPisca { 0%, 100% { transform: scale(1); opacity: 0.6; background-color: #03fc03; box-shadow: 0 0 8px red, 0 0 15px #FFC107; } 50% { transform: scale(1.4); opacity: 1; background-color: #fff; box-shadow: 0 0 12px #ffffff, 0 0 20px #FFD700; } }
+        @keyframes linhaBrilha { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+        .bolinha { width: 10px; height: 10px; border-radius: 50%; animation: bolinhaPisca 1.2s infinite ease-in-out; }
+        @media (min-width: 1024px) { .divisoria-bolinhas { display: none !important; } }
+      </style>
+      <div style="flex: 1; height: 4px; background: linear-gradient(to right, transparent, #165DFF, #0b4883); border-radius: 2px; animation: linhaBrilha 2s infinite alternate;"></div>
+      <div class="bolinha" style="animation-delay: 0s;"></div>
+      <div class="bolinha" style="animation-delay: 0.2s;"></div>
+      <div class="bolinha" style="animation-delay: 0.4s;"></div>
+      <div style="flex: 1; height: 4px; background: linear-gradient(to left, transparent, #165DFF, #0b4883); border-radius: 2px; animation: linhaBrilha 2s infinite alternate;"></div>
+    </div>
+
+    <div class="form-wrapper">
+        <div id="loading" class="loading">Carregando números já existentes...</div>    
+        
+        <div class="fast-buttons">
+            <button type="button" class="btn-fast" onclick="selecionarRapido(15)">15 Cotas <span>R$7,50</span></button>
+            <button type="button" class="btn-fast" onclick="selecionarRapido(20)">20 Cotas <span>R$ 10,00</span></button>
+            <button type="button" class="btn-fast" onclick="selecionarRapido(30)">30 Cotas <span>R$ 15,00</span></button>
+            <button type="button" class="btn-fast" onclick="selecionarRapido(40)">40 Cotas <span>R$ 20,00</span></button>
+            <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(60)">60 Cotas <span>R$ 30,00</span></button>
+            <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(70)">70 Cotas <span>R$ 35,00</span></button>
+            <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(80)">80 Cotas <span>R$ 40,00</span></button>
+            <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(300)"><span style="color: red; font-size: 20px;">😍 DESCONTO 😍</span>300 Cotas <span>R$ 140,00</span></button>
+        </div>
+        
+        <div class="form-group">
+            <label for="nome">Seu Primeiro Nome</label>
+            <input type="text" id="nome" placeholder="Digite o nome">
+        </div>
+        <div class="form-group">
+            <label for="whatsapp">WhatsApp (com DDD):</label>
+            <input type="tel" id="whatsapp" placeholder="Ex: 62 995679219">
+        </div>
+        <div class="form-group">
+            <label for="qtd">Quantidade de Cotas...</label>
+            <input type="number" id="qtd" min="10" max="300" value="10">
+        </div>
+
+        <button id="btnGenerate" class="btn-generate" onclick="gerarCotas()" disabled>Gerar Cotas</button>
+
+        <div id="results" class="results">
+            <h3>Suas Cotas:</h3>
+            <div id="listaCotas"></div>
+            <button id="btnConfirm" class="btn-confirm" onclick="confirmarEEnviar()">Confirmar e Finalizar</button>
         </div>
     </div>
-
-
-  <!-- Faixa dourada -->
-  <div style="
-    width: 85%;
-    height: 4px;
-    background: linear-gradient(to right, transparent, #FFD700, #fff, #FFD700, transparent);
-    margin: 0 auto 20px auto;
-    border-radius: 2px;
-    box-shadow: 0 0 8px #FFD700;
-    position: relative;
-    z-index: 3;
-  "></div>
-
-  <!-- Chamada motivacional -->
-  <p style="
-    color: #fff;
-    font-size: clamp(12px, 3vw, 14px);
-    font-weight: 600;
-    margin: 0 0 15px 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    z-index: 3;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-  ">
-    🎟️ Sua chance de ganhar é agora!
-  </p>
-
-  <!-- Valor com ÍCONE -->
-    <p>De</p><br>
-    <div style="
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: clamp(18px, 5vw, 24px);
-    font-weight: bold;
-    color: red;
-    padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
-    background: rgba(0,0,0,0.2);
-    border-radius: 12px;
-    border: 1px solid rgba(255,215,0,0.4);
-    box-shadow: inset 0 0 10px rgba(255,215,0,0.2);
-    position: relative;
-    z-index: 3;
-    animation: pulsarValor 1.5s infinite alternate;
-  ">
-    <i class="fa fa-coins" style="font-size: clamp(22px, 5vw, 28px); filter: drop-shadow(0 0 4px #FFD700);"></i>
-    <span>R$ 1,00 Real</span>
-  </div>
-    <br>
-    <p>Por</p>
-    <br>
-  <div style="
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: clamp(18px, 5vw, 24px);
-    font-weight: bold;
-    color: #FFD700;
-    padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 15px);
-    background: rgba(0,0,0,0.2);
-    border-radius: 12px;
-    border: 1px solid rgba(255,215,0,0.4);
-    box-shadow: inset 0 0 10px rgba(255,215,0,0.2);
-    position: relative;
-    z-index: 3;
-    animation: pulsarValor 1.5s infinite alternate;
-  ">
-    <i class="fa fa-coins" style="font-size: clamp(22px, 5vw, 28px); filter: drop-shadow(0 0 4px #FFD700);"></i>
-    <span>R$ 0,50 Centavos</span>
-  </div>
-
-  <!-- Frase final -->
-  <p style="
-    margin: 15px 0 0 0;
-    font-size: clamp(14px, 2.5vw, 17px);
-    color: #fff;
-    font-weight: 500;
-    position: relative;
-    z-index: 3;
-    opacity: 0.9;
-    font-style: italic;
-  ">
-     A partir de apenas 50 centavos por cota!
-  </p>
-
-</div>
-
-    <!-- LINHA DIVISÓRIA MODERNA COM BOLINHAS PISCANDO -->
-<div style="
-  width: 100%;
-  margin: 50px auto; /* Mantém o espaçamento que você queria */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  position: relative;
-">
-
-  <!-- ANIMAÇÃO DAS BOLINHAS -->
-  <style>
-    @keyframes bolinhaPisca {
-      0%, 100% {
-        transform: scale(1);
-        opacity: 0.6;
-        background-color: #03fc03;
-        box-shadow: 0 0 8px red, 0 0 15px #FFC107;
-      }
-      50% {
-        transform: scale(1.4);
-        opacity: 1;
-        background-color: #fff;
-        box-shadow: 0 0 12px #ffffff, 0 0 20px #FFD700;
-      }
-    }
-    @keyframes linhaBrilha {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
-    }
-    .bolinha {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      animation: bolinhaPisca 1.2s infinite ease-in-out;
-    }
-  </style>
-
-  <!-- Linha esquerda -->
-  <div style="
-    flex: 1;
-    height: 4px;
-    background: linear-gradient(to right, transparent, #165DFF, #0b4883);
-    border-radius: 2px;
-    animation: linhaBrilha 2s infinite alternate;
-  "></div>
-
-  <!-- Bolinhas piscando no meio -->
-  <div class="bolinha" style="animation-delay: 0s;"></div>
-  <div class="bolinha" style="animation-delay: 0.2s;"></div>
-  <div class="bolinha" style="animation-delay: 0.4s;"></div>
-
-  <!-- Linha direita -->
-  <div style="
-    flex: 1;
-    height: 4px;
-    background: linear-gradient(to left, transparent, #165DFF, #0b4883);
-    border-radius: 2px;
-    animation: linhaBrilha 2s infinite alternate;
-  "></div>
-
-</div>
-
-    <div id="loading" class="loading">Carregando números já existentes...</div>    
-    <div class="fast-buttons">
-        <button type="button" class="btn-fast" onclick="selecionarRapido(15)">15 Cotas <span>R$7,50</span></button>
-        <button type="button" class="btn-fast" onclick="selecionarRapido(20)">20 Cotas <span>R$ 10,00</span></button>
-        <button type="button" class="btn-fast" onclick="selecionarRapido(30)">30 Cotas <span>R$ 15,00</span></button>
-        <button type="button" class="btn-fast" onclick="selecionarRapido(40)">40 Cotas <span>R$ 20,00</span></button>
-        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(60)">60 Cotas <span>R$ 30,00</span></button>
-        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(70)">70 Cotas <span>R$ 35,00</span></button>
-        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(80)">80 Cotas <span>R$ 40,00</span></button>
-        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(300)"><span style="color: red; font-size: 20px;">😍 DESCONTO 😍</span>300 Cotas <span>R$ 140,00</span></button>
-    </div>
-    
-    <div class="form-group">
-        <label for="nome">Seu Primeiro Nome</label>
-        <input type="text" id="nome" placeholder="Digite o nome">
-    </div>
-    <div class="form-group">
-        <label for="whatsapp">WhatsApp (com DDD):</label>
-        <input type="tel" id="whatsapp" placeholder="Ex: 62 995679219">
-    </div>
-        <div class="form-group">
-        <label for="qtd">Quantidade de Cotas <span style="font-size: 10px; color: red;">(Mín 10 / Máx 300)</span>:</label>
-        <input type="number" id="qtd" min="10" max="300" value="10">
-    </div>
-
-    <button id="btnGenerate" class="btn-generate" onclick="gerarCotas()" disabled>Gerar Cotas</button>
-
-    <div id="results" class="results">
-        <h3>Suas Cotas:</h3>
-        <div id="listaCotas"></div>
-        <button id="btnConfirm" class="btn-confirm" onclick="confirmarEEnviar()">Confirmar e Finalizar</button>
-    </div>
-</div>
-
-
    <script>
     // Configurações das URLs
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTtZQeMAZAdMxxvTLz7YTYylYbu2tSwwANB1Braq_vyrs3_ersG3r1R7qxfdMxfG3YbJzl0Vgakfm1o/pub?output=csv";
